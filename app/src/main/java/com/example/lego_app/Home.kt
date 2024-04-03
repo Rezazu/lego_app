@@ -1,13 +1,11 @@
 package com.example.lego_app
 
 import android.preference.PreferenceActivity.Header
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -27,10 +25,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lego_app.Data.News
+import com.example.lego_app.Data.Product
 import com.example.lego_app.Data.Theme
 import com.example.lego_app.Data.User
+import com.example.lego_app.Service.Service
 import com.example.lego_app.ui.theme.BrightYellow
+import com.example.lego_app.ui.theme.PaleBlue
 import com.example.lego_app.ui.theme.TextWhite
+import java.math.BigDecimal
 
 @Composable
 fun Home() {
@@ -40,6 +42,7 @@ fun Home() {
     ) {
         Column(
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
         ) {
             HeaderSection(
                 modifier = Modifier,
@@ -93,6 +96,54 @@ fun Home() {
             )
 
             NewsBanner(newsImage = R.drawable.img_new, modifier = Modifier)
+
+            NewProductSection(
+                listOf(
+                    Product(
+                        "LEGO AT-TE™ Walker 75337",
+                        "Star Wars",
+                        BigDecimal(2400000),
+                        R.drawable.img_item1
+                    ),
+                    Product(
+                        "LEGO Penguin Slushy Van 60384",
+                        "City",
+                        BigDecimal(359000),
+                        R.drawable.img_item2
+                    ),
+                    Product(
+                        "LEGO 21348 Dungeons & Dragons",
+                        "Ideas",
+                        BigDecimal(3000000),
+                        R.drawable.img_item3
+                    )
+                )
+            )
+
+            NewsBanner(newsImage = R.drawable.img_sale, modifier = Modifier)
+
+            SaleProductSection(
+                 listOf(
+                     Product(
+                         "LEGO AT-TE™ Walker 75337",
+                         "Star Wars",
+                         BigDecimal(2400000),
+                         R.drawable.img_item1
+                     ),
+                     Product(
+                         "LEGO Penguin Slushy Van 60384",
+                         "City",
+                         BigDecimal(359000),
+                         R.drawable.img_item2
+                     ),
+                     Product(
+                         "LEGO 21348 Dungeons & Dragons",
+                         "Ideas",
+                         BigDecimal(3000000),
+                         R.drawable.img_item3
+                     )
+                 )
+            )
         }
     }
 }
@@ -322,7 +373,7 @@ fun ThemeSection(
         modifier = Modifier.padding(15.dp)
     )
     LazyRow(
-        contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
+        contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(theme.size) {
@@ -374,5 +425,102 @@ fun NewsBanner(
             modifier = Modifier.fillMaxSize()
 
         )
+    }
+}
+
+@Composable
+fun NewProductSection(
+    product: List<Product>
+) {
+    Text(
+        text = "New Products",
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.padding(15.dp)
+    )
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        items(product.size) {
+            ProductItem(product[it])
+        }
+    }
+}
+
+@Composable
+fun SaleProductSection(
+    product: List<Product>
+) {
+    Text(
+        text = "ON SALE",
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.padding(15.dp)
+    )
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        items(product.size) {
+            ProductItem(product[it])
+        }
+    }
+}
+
+@Composable
+fun ProductItem(
+    product: Product
+) {
+    Card(
+        modifier = Modifier
+            .width(160.dp)
+            .height(225.dp),
+        elevation = 5.dp,
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(10.dp)
+        ) {
+            Image(
+                painter = painterResource(id = product.image),
+                contentDescription = "Item",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .height(140.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Column {
+                    Text(
+                        text = product.theme,
+                        fontSize = 8.sp,
+                        color = PaleBlue,
+                    )
+                    Text(
+                        text = product.name,
+                        fontSize = 12.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(
+                        modifier = Modifier.height(5.dp)
+                    )
+                    Text(
+                        text = Service.DecimalPrice(product.price),
+                        fontSize = 14.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
     }
 }
