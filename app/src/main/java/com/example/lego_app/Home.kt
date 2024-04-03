@@ -29,9 +29,8 @@ import com.example.lego_app.Data.Product
 import com.example.lego_app.Data.Theme
 import com.example.lego_app.Data.User
 import com.example.lego_app.Service.Service
-import com.example.lego_app.ui.theme.BrightYellow
-import com.example.lego_app.ui.theme.PaleBlue
-import com.example.lego_app.ui.theme.TextWhite
+import com.example.lego_app.ui.theme.*
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.math.BigDecimal
 
 @Composable
@@ -125,24 +124,31 @@ fun Home() {
             SaleProductSection(
                  listOf(
                      Product(
-                         "LEGO AT-TE™ Walker 75337",
+                         "LEGO Heatwave Lava Dragon 71793",
+                         "Ninjago",
+                         BigDecimal(999000),
+                         R.drawable.img_item4
+                     ),
+                     Product(
+                         "LEGO Technic Heavy Duty Bulldozer 42163",
+                         "Technic",
+                         BigDecimal(139000),
+                         R.drawable.img_item5
+                     ),
+                     Product(
+                         "LEGO Ahsoka Tano's T-6 Jedi Shuttle 75362",
                          "Star Wars",
-                         BigDecimal(2400000),
-                         R.drawable.img_item1
-                     ),
-                     Product(
-                         "LEGO Penguin Slushy Van 60384",
-                         "City",
-                         BigDecimal(359000),
-                         R.drawable.img_item2
-                     ),
-                     Product(
-                         "LEGO 21348 Dungeons & Dragons",
-                         "Ideas",
                          BigDecimal(3000000),
-                         R.drawable.img_item3
+                         R.drawable.img_item6
                      )
                  )
+            )
+            
+            NewsBannerStore(
+                newsText = "Telah Dibuka!\n" +
+                    "LEGO® Bintaro Jaya Xchange Mall 2 – Ground Floor",
+                newsImage = R.drawable.img_legostore,
+                modifier = Modifier
             )
         }
     }
@@ -437,10 +443,10 @@ fun NewProductSection(
         fontSize = 16.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,
-        modifier = Modifier.padding(15.dp)
+        modifier = Modifier.padding(12.dp)
     )
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(product.size) {
@@ -458,7 +464,7 @@ fun SaleProductSection(
         fontSize = 16.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,
-        modifier = Modifier.padding(15.dp)
+        modifier = Modifier.padding(12.dp)
     )
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
@@ -490,9 +496,9 @@ fun ProductItem(
             Image(
                 painter = painterResource(id = product.image),
                 contentDescription = "Item",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .height(140.dp)
+                    .height(130.dp)
             )
             Box(
                 modifier = Modifier
@@ -503,6 +509,9 @@ fun ProductItem(
                         text = product.theme,
                         fontSize = 8.sp,
                         color = PaleBlue,
+                    )
+                    Spacer(
+                        modifier = Modifier.height(5.dp)
                     )
                     Text(
                         text = product.name,
@@ -521,6 +530,56 @@ fun ProductItem(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun NewsBannerStore(
+    newsText : String,
+    newsImage : Int,
+    modifier: Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(150.dp)
+            .background(BackgroundWhite)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            Column(
+                modifier = modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(0.5f)
+                    .padding(vertical = 16.dp, horizontal = 10.dp)
+            ) {
+                Text(
+                    text = newsText,
+                    fontSize = 12.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(
+                    modifier = modifier
+                        .height(40.dp)
+                )
+                Text(
+                    text = "Lihat semua LEGO Store",
+                    fontSize = 10.sp,
+                    color = BrightOrange,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Image(
+                painter = painterResource(id = newsImage),
+                contentDescription = "News Store",
+                contentScale = ContentScale.Crop,
+                modifier = modifier
+                    .width(200.dp)
+            )
         }
     }
 }
