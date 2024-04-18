@@ -5,12 +5,10 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -24,10 +22,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.lego_app.Data.*
 import com.example.lego_app.Data.News
-import com.example.lego_app.Data.Product
-import com.example.lego_app.Data.Theme
-import com.example.lego_app.Data.User
 import com.example.lego_app.Service.Service
 import com.example.lego_app.ui.theme.*
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
@@ -150,6 +152,7 @@ fun Home() {
                 newsImage = R.drawable.img_legostore,
                 modifier = Modifier
             )
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }
@@ -583,3 +586,4 @@ fun NewsBannerStore(
         }
     }
 }
+
