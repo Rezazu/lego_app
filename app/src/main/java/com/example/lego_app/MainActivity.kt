@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
@@ -26,7 +25,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.lego_app.Data.BottomNavItem
-import com.example.lego_app.Data.News
 import com.example.lego_app.ui.theme.BrightYellow
 import com.example.lego_app.ui.theme.DarkGray
 import com.example.lego_app.ui.theme.Lego_appTheme
@@ -67,7 +65,7 @@ class MainActivity : ComponentActivity() {
                                     iconClicked = R.drawable.ic_legohead_selected
                                 )
 
-                        ),
+                            ),
                             navController = navController,
                             onItemClick = {
                                 navController.navigate(it.route)
@@ -135,7 +133,7 @@ fun BottomNavigationBar(
         backgroundColor = Color.White,
         elevation = 5.dp,
 
-    ) {
+        ) {
 
         items.forEach { item ->
             val selected = item.route == backStackEntry.value?.destination?.route

@@ -1,20 +1,21 @@
 package com.example.lego_app
 
-import android.preference.PreferenceActivity.Header
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -22,17 +23,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.lego_app.Data.*
 import com.example.lego_app.Data.News
 import com.example.lego_app.Service.Service
 import com.example.lego_app.ui.theme.*
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 @Composable
@@ -56,8 +55,8 @@ fun Home() {
                 listOf(
                     News(
                         "Celebrate 20 years of Clone Wars adventures",
-                    "Let your mind drift to a galaxy far, far away as you build and display a massive Ultimate Collector Series version of the Venator-Class Republic Attack Cruiser.",
-                    R.drawable.img_news1
+                        "Let your mind drift to a galaxy far, far away as you build and display a massive Ultimate Collector Series version of the Venator-Class Republic Attack Cruiser.",
+                        R.drawable.img_news1
                     ),
                     News(
                         "Celebrate 20 years of Clone Wars adventures",
@@ -124,35 +123,36 @@ fun Home() {
             NewsBanner(newsImage = R.drawable.img_sale, modifier = Modifier)
 
             SaleProductSection(
-                 listOf(
-                     Product(
-                         "LEGO Heatwave Lava Dragon 71793",
-                         "Ninjago",
-                         BigDecimal(999000),
-                         R.drawable.img_item4
-                     ),
-                     Product(
-                         "LEGO Technic Heavy Duty Bulldozer 42163",
-                         "Technic",
-                         BigDecimal(139000),
-                         R.drawable.img_item5
-                     ),
-                     Product(
-                         "LEGO Ahsoka Tano's T-6 Jedi Shuttle 75362",
-                         "Star Wars",
-                         BigDecimal(3000000),
-                         R.drawable.img_item6
-                     )
-                 )
+                listOf(
+                    Product(
+                        "LEGO Heatwave Lava Dragon 71793",
+                        "Ninjago",
+                        BigDecimal(999000),
+                        R.drawable.img_item4
+                    ),
+                    Product(
+                        "LEGO Technic Heavy Duty Bulldozer 42163",
+                        "Technic",
+                        BigDecimal(139000),
+                        R.drawable.img_item5
+                    ),
+                    Product(
+                        "LEGO Ahsoka Tano's T-6 Jedi Shuttle 75362",
+                        "Star Wars",
+                        BigDecimal(3000000),
+                        R.drawable.img_item6
+                    )
+                )
             )
-            
+
             NewsBannerStore(
                 newsText = "Telah Dibuka!\n" +
-                    "LEGO® Bintaro Jaya Xchange Mall 2 – Ground Floor",
+                        "LEGO® Bintaro Jaya Xchange Mall 2 – Ground Floor",
                 newsImage = R.drawable.img_legostore,
                 modifier = Modifier
             )
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(90.dp))
+
         }
     }
 }
@@ -180,7 +180,9 @@ fun HeaderSection(
                 tint = Color.DarkGray,
                 modifier = modifier
                     .size(20.dp)
-                    .clickable { }
+                    .clickable {
+
+                    }
             )
             Image(
                 painter = painterResource(id = R.drawable.ic_lego),
@@ -245,11 +247,13 @@ fun HeaderSection(
                         Text(
                             text = "Welcome!",
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
                         )
                         Text(
                             text = user.name,
-                            fontSize = 10.sp
+                            fontSize = 10.sp,
+                            color = Color.Black
                         )
                     }
                 }
@@ -281,11 +285,13 @@ fun HeaderSection(
                         Text(
                             text = "Lego Insider",
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
                         )
                         Text(
                             text = "${user.point} Points",
-                            fontSize = 10.sp
+                            fontSize = 10.sp,
+                            color = Color.Black
                         )
                     }
                 }
@@ -299,16 +305,36 @@ fun SearchBar() {
 
 }
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
 @Composable
 fun NewSection(
     news: List<News>
 ) {
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    val pagerState = rememberPagerState(pageCount = news.size)
+    HorizontalPager(
+        state = pagerState,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 15.dp, bottom = 10.dp),
+    ) { page ->
+        NewsItem(news = news[page])
+    }
+    Row(
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
     ) {
-        items(news.size) {
-            NewsItem(news[it])
+        repeat(pagerState.pageCount) { iteration ->
+            val color = if (pagerState.currentPage == iteration) BrightYellow else LightGray
+            Box(
+                modifier = Modifier
+                    .padding(2.dp)
+                    .clip(CircleShape)
+                    .width(if (pagerState.currentPage == iteration) 30.dp else 8.dp)
+                    .background(color)
+                    .size(8.dp),
+            )
         }
     }
 }
@@ -320,8 +346,9 @@ fun NewsItem(
 ) {
     Card(
         modifier = Modifier
-            .width(350.dp)
-            .height(200.dp),
+            .width(360.dp)
+            .height(210.dp)
+            .padding(horizontal = 8.dp),
         shape = RoundedCornerShape(15.dp),
         elevation = 5.dp
     ) {
@@ -441,19 +468,42 @@ fun NewsBanner(
 fun NewProductSection(
     product: List<Product>
 ) {
-    Text(
-        text = "New Products",
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.padding(12.dp)
-    )
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    Column(
+        modifier = Modifier
+            .padding(bottom = 20.dp, top = 10.dp),
     ) {
-        items(product.size) {
-            ProductItem(product[it])
+        Text(
+            text = "New Products",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(12.dp),
+            color = Color.Black
+        )
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items(product.size) {
+                ProductItem(product[it])
+            }
+        }
+        Button(
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = BrightOrange),
+            modifier = Modifier
+                .height(32.dp)
+                .width(120.dp)
+                .align(alignment = CenterHorizontally),
+            onClick = { /*TODO*/ }
+        )
+        {
+            Text(
+                text = "Lihat Lainnya",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White
+            )
         }
     }
 }
@@ -462,19 +512,42 @@ fun NewProductSection(
 fun SaleProductSection(
     product: List<Product>
 ) {
-    Text(
-        text = "ON SALE",
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.padding(12.dp)
-    )
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    Column(
+        modifier = Modifier
+            .padding(bottom = 20.dp, top = 10.dp),
     ) {
-        items(product.size) {
-            ProductItem(product[it])
+        Text(
+            text = "ON SALE",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(12.dp),
+            color = Color.Black
+        )
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items(product.size) {
+                ProductItem(product[it])
+            }
+        }
+        Button(
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = BrightRed),
+            modifier = Modifier
+                .height(32.dp)
+                .width(120.dp)
+                .align(alignment = CenterHorizontally),
+            onClick = { /*TODO*/ }
+        )
+        {
+            Text(
+                text = "Lihat Lainnya",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White
+            )
         }
     }
 }

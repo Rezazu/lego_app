@@ -3,4 +3,8 @@
     <string name="title_activity_news">News</string>
     <string name="title_activity_collection">Collection</string>
     <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_navigation_drawe">NavigationDrawe</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_home_m3">HomeM3</string>
+    <string name="title_activity_main2">MainActivity2</string>
 </resources>

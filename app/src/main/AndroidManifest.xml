@@ -13,33 +13,6 @@
         android:theme="@style/Theme.Lego_app"
         tools:targetApi="31">
         <activity
-            android:name=".Collection"
-            android:exported="false"
-            android:label="@string/title_activity_collection"
-            android:theme="@style/Theme.Lego_app">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".News"
-            android:exported="false"
-            android:label="@string/title_activity_news"
-            android:theme="@style/Theme.Lego_app">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Profile"
-            android:exported="false"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/Theme.Lego_app">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
