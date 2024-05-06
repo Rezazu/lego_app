@@ -15,3 +15,7 @@ val BrightRed = Color(0xffE41E1E)
 val PaleBlue = Color(0xff2D84BF)
 val DarkGray = Color(0xff5C5C5C)
 val BackgroundWhite = Color(0xffF6F6F6)
+
+val DarkBlue = Color(0xff005AD2)
+val DarkRed = Color(0xffD0021B)
+val LightGrayBackground = Color(0xffEBEBEB)
