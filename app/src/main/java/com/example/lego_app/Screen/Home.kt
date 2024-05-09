@@ -494,7 +494,7 @@ fun NewProductSection(
             modifier = Modifier
                 .height(32.dp)
                 .width(120.dp)
-                .align(alignment = CenterHorizontally),
+                .align(alignment  = CenterHorizontally),
             onClick = { /*TODO*/ }
         )
         {

@@ -143,8 +143,8 @@ fun BottomNavigationBar(
                 icon =  {
                     Column(
                         modifier = modifier
-                            .height(50.dp)
-                            .width(38.dp),
+                            .height(45.dp)
+                            .width(33.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         if (item.badgeCount>0) {

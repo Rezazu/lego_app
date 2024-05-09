@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -21,8 +21,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.lego_app.Data.Order
 import com.example.lego_app.Data.Product
+import com.example.lego_app.Data.ProfileButtonItem
 import com.example.lego_app.Data.User
 import com.example.lego_app.Service.Service
 import com.example.lego_app.ui.theme.*
@@ -32,7 +35,7 @@ import java.math.BigDecimal
 @Composable
 fun Profile(){
 
-    val list = ArrayList<Order>()
+    val navController = rememberNavController()
 
     Box(
         modifier = Modifier
@@ -95,6 +98,42 @@ fun Profile(){
                     )
                 )
             )
+            ProfileButton(
+                items = listOf(
+                    ProfileButtonItem(
+                        name = "Overview Akun",
+                        route = "home",
+                        icon = R.drawable.ic_legohead2
+                    ),
+                    ProfileButtonItem(
+                        name = "Pesanan Saya",
+                        route = "home",
+                        icon = R.drawable.ic_shipping
+                    ),
+                    ProfileButtonItem(
+                        name = "Data Diri & Alamat",
+                        route = "home",
+                        icon = R.drawable.ic_address
+                    ),
+                    ProfileButtonItem(
+                        name = "Wishlist",
+                        route = "home",
+                        icon = R.drawable.ic_heart
+                    ),
+                    ProfileButtonItem(
+                        name = "Pengaturan Akun",
+                        route = "home",
+                        icon = R.drawable.ic_setting
+                    ),
+                    ProfileButtonItem(
+                        name = "Keluar",
+                        route = "home",
+                        icon = R.drawable.ic_logout
+                    )
+                ),
+                navController = navController
+            )
+            Spacer(modifier = Modifier.height(90.dp))
         }
     }
 }
@@ -268,7 +307,7 @@ fun OrderSection(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .defaultMinSize(minHeight = 250.dp)
-                .background(LightGrayBackground)
+                .background(BackgroundWhite)
                 .clip(RoundedCornerShape(10.dp)),
             contentAlignment = Alignment.Center,
         ) {
@@ -441,4 +480,74 @@ fun OrderItem(
             }
         }
     }
+}
+
+@Composable
+fun ProfileButton(
+    items: List<ProfileButtonItem>,
+    navController: NavController
+) {
+    var selected by remember { mutableStateOf(false) }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            items.forEach { item->
+                ProfileButtonItem(item = item)
+            }
+            Divider(
+                color = BorderGray,
+                thickness = 0.8.dp,
+            )
+        }
+
+}
+
+@Composable
+fun ProfileButtonItem(
+    item: ProfileButtonItem
+) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .clickable { /*TODO*/ }
+        ) {
+            Divider(
+                color = BorderGray,
+                thickness = 0.8.dp,
+            )
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = item.icon),
+                    contentDescription = "Item Icon",
+                    modifier = Modifier
+                        .size(18.dp)
+
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                Text(
+                    text = item.name,
+                    fontSize = 12.sp,
+                    color = Color.Black,
+                    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
+                    modifier = Modifier
+                        .padding(5.dp)
+                )
+            }
+        }
+}
+
+@Composable
+fun BantuanSection(
+
+) {
+
 }
