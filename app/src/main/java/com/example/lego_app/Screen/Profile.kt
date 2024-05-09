@@ -23,10 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.lego_app.Data.Order
-import com.example.lego_app.Data.Product
-import com.example.lego_app.Data.ProfileButtonItem
-import com.example.lego_app.Data.User
+import com.example.lego_app.Data.*
 import com.example.lego_app.Service.Service
 import com.example.lego_app.ui.theme.*
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
@@ -133,7 +130,29 @@ fun Profile(){
                 ),
                 navController = navController
             )
-            Spacer(modifier = Modifier.height(90.dp))
+            BantuanSection(
+                bantuanItem = listOf(
+                    ProfileBantuanItem(
+                        "Pengantaran & Kurir",
+                        "home"
+                    ),
+                    ProfileBantuanItem(
+                        "FAQs",
+                        "home"
+                    ),
+                    ProfileBantuanItem(
+                        "Penggantian Part & Buku Instruksi",
+                        "home"
+                    ),
+                    ProfileBantuanItem(
+                        "Kontak",
+                        "home"
+                    ),
+                )
+            )
+            Box(modifier = Modifier
+                .height(100.dp)
+            )
         }
     }
 }
@@ -547,7 +566,41 @@ fun ProfileButtonItem(
 
 @Composable
 fun BantuanSection(
-
+    bantuanItem : List<ProfileBantuanItem>
 ) {
-
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        Text(
+            text = "Bantuan",
+            fontSize = 12.sp,
+            color = Color.Black,
+            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+            modifier = Modifier
+                .padding(15.dp)
+        )
+        Divider(
+            color = BorderGray,
+            thickness = 0.8.dp,
+        )
+        bantuanItem.forEach { item->
+            Text(
+                text = item.name,
+                fontSize = 10.sp,
+                color = Color.Black,
+                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(36.dp)
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
+                    .clickable { /*TODO*/ }
+            )
+            Divider(
+                color = BorderGray,
+                thickness = 0.8.dp,
+            )
+        }
+    }
 }
