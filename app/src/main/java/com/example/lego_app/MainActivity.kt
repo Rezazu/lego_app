@@ -15,7 +15,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -25,88 +24,64 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.lego_app.Data.BottomNavItem
+import com.example.lego_app.Navigation.Navigation
+import com.example.lego_app.Navigation.Screen
 import com.example.lego_app.ui.theme.BrightYellow
 import com.example.lego_app.ui.theme.DarkGray
 import com.example.lego_app.ui.theme.Lego_appTheme
+
+//
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Lego_appTheme {
-                Home()
                 val navController = rememberNavController()
+                HomeScreen(navController)
                 Scaffold(
                     bottomBar = {
                         BottomNavigationBar(
                             items = listOf(
                                 BottomNavItem(
                                     name = "Home",
-                                    route = "home",
+                                    route = Screen.Home.route,
                                     icon = R.drawable.ic_home,
                                     iconClicked = R.drawable.ic_home_selected
                                 ),
                                 BottomNavItem(
                                     name = "News",
-                                    route = "news",
+                                    route = Screen.News.route,
                                     icon = R.drawable.ic_news,
                                     iconClicked = R.drawable.ic_news_selected
                                 ),
                                 BottomNavItem(
                                     name = "Collection",
-                                    route = "collection",
+                                    route = Screen.Collection.route,
                                     icon = R.drawable.ic_brick,
                                     iconClicked = R.drawable.ic_legobrick_selected
                                 ),
                                 BottomNavItem(
                                     name = "Profile",
-                                    route = "profile",
+                                    route = Screen.Profile.route,
                                     icon = R.drawable.ic_legohead2,
                                     iconClicked = R.drawable.ic_legohead_selected
                                 )
-
                             ),
                             navController = navController,
                             onItemClick = {
-                                navController.navigate(it.route)
+                                navController.navigate(it.route) {
+                                    popUpTo(it.route) {
+                                        inclusive = true
+                                    }
+                                }
                             }
                         )
                     }
                 ) {
-                    Navigation(navController = navController)
+                    Navigation(navController)
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    Lego_appTheme {
-        Greeting("Android")
-    }
-}
-
-@Composable
-fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            Home()
-        }
-        composable("news") {
-            News()
-        }
-        composable("collection") {
-            Collection()
-        }
-        composable("profile") {
-            Profile()
         }
     }
 }

@@ -1,13 +1,11 @@
-package com.example.lego_app
+package com.example.lego_app.Screen.ProfileScreen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -21,27 +19,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.lego_app.Data.*
+import com.example.lego_app.R
 import com.example.lego_app.Service.Service
 import com.example.lego_app.ui.theme.*
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
-import java.math.BigDecimal
 
-@Composable
-fun Profile(){
-
-    val navController = rememberNavController()
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ){
+val accountOverviewScreen : @Composable ColumnScope.() -> Unit = @Composable {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White)
+    ) {
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             AccountOverview(
                 user = User(
@@ -50,109 +41,54 @@ fun Profile(){
                 )
             )
             OrderSection(
-                listOf(
-                    Order(
-                        1,
-                        111222444,
-                        "05-05-2024",
-                        listOf(
-                            Product(
-                                "LEGO AT-TE™ Walker 75337",
-                                "Star Wars",
-                                BigDecimal(2400000),
-                                R.drawable.img_item1
-                            ),
-                            Product(
-                                "LEGO 21348 Dungeons & Dragons",
-                                "Ideas",
-                                BigDecimal(3000000),
-                                R.drawable.img_item3
-                            )
-                        ),
-                        "Regular",
-                        "Diterima"
-                    ),
-                    Order(
-                        2,
-                        111222555,
-                        "01-12-2024",
-                        listOf(
-                            Product(
-                                "LEGO AT-TE™ Walker 75337",
-                                "Star Wars",
-                                BigDecimal(2400000),
-                                R.drawable.img_item1
-                            ),
-                            Product(
-                                "LEGO 21348 Dungeons & Dragons",
-                                "Ideas",
-                                BigDecimal(3000000),
-                                R.drawable.img_item3
-                            )
-                        ),
-                        "Regular",
-                        "Diterima"
-                    )
-                )
+                listOf()
             )
-            ProfileButton(
-                items = listOf(
-                    ProfileButtonItem(
-                        name = "Overview Akun",
-                        route = "home",
-                        icon = R.drawable.ic_legohead2
-                    ),
-                    ProfileButtonItem(
-                        name = "Pesanan Saya",
-                        route = "home",
-                        icon = R.drawable.ic_shipping
-                    ),
-                    ProfileButtonItem(
-                        name = "Data Diri & Alamat",
-                        route = "home",
-                        icon = R.drawable.ic_address
-                    ),
-                    ProfileButtonItem(
-                        name = "Wishlist",
-                        route = "home",
-                        icon = R.drawable.ic_heart
-                    ),
-                    ProfileButtonItem(
-                        name = "Pengaturan Akun",
-                        route = "home",
-                        icon = R.drawable.ic_setting
-                    ),
-                    ProfileButtonItem(
-                        name = "Keluar",
-                        route = "home",
-                        icon = R.drawable.ic_logout
-                    )
-                ),
-                navController = navController
-            )
-            BantuanSection(
-                bantuanItem = listOf(
-                    ProfileBantuanItem(
-                        "Pengantaran & Kurir",
-                        "home"
-                    ),
-                    ProfileBantuanItem(
-                        "FAQs",
-                        "home"
-                    ),
-                    ProfileBantuanItem(
-                        "Penggantian Part & Buku Instruksi",
-                        "home"
-                    ),
-                    ProfileBantuanItem(
-                        "Kontak",
-                        "home"
-                    ),
-                )
-            )
-            Box(modifier = Modifier
-                .height(100.dp)
-            )
+//            OrderSection(
+//                listOf(
+//                    Order(
+//                        1,
+//                        111222444,
+//                        "05-05-2024",
+//                        listOf(
+//                            Product(
+//                                "LEGO AT-TE™ Walker 75337",
+//                                "Star Wars",
+//                                BigDecimal(2400000),
+//                                R.drawable.img_item1
+//                            ),
+//                            Product(
+//                                "LEGO 21348 Dungeons & Dragons",
+//                                "Ideas",
+//                                BigDecimal(3000000),
+//                                R.drawable.img_item3
+//                            )
+//                        ),
+//                        "Regular",
+//                        "Diterima"
+//                    ),
+//                    Order(
+//                        2,
+//                        111222555,
+//                        "01-12-2024",
+//                        listOf(
+//                            Product(
+//                                "LEGO AT-TE™ Walker 75337",
+//                                "Star Wars",
+//                                BigDecimal(2400000),
+//                                R.drawable.img_item1
+//                            ),
+//                            Product(
+//                                "LEGO 21348 Dungeons & Dragons",
+//                                "Ideas",
+//                                BigDecimal(3000000),
+//                                R.drawable.img_item3
+//                            )
+//                        ),
+//                        "Regular",
+//                        "Diterima"
+//                    )
+//                )
+//            )
         }
     }
 }
@@ -200,6 +136,7 @@ fun AccountOverview(
                         text = "Hey, LEGO® Insider! (That's\n" + "you!)",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(horizontal = 10.dp)
@@ -229,10 +166,10 @@ fun AccountOverview(
                     ) {
                     Text(
                         buildAnnotatedString {
-                            withStyle(style = SpanStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal)) {
+                            withStyle(style = SpanStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal,color = Color.Black)) {
                                 append("Hi,\n")
                             }
-                            withStyle(style = SpanStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold)) {
+                            withStyle(style = SpanStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold,color = Color.Black,)) {
                                 append(user.name)
                             }
                         },
@@ -277,7 +214,7 @@ fun AccountOverview(
                         color = Color.White,
                         fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
                         modifier = Modifier
-                            .align(alignment = CenterHorizontally)
+                            .align(alignment = Alignment.CenterHorizontally)
                             .padding(bottom = 10.dp)
 
                     )
@@ -287,7 +224,7 @@ fun AccountOverview(
                         modifier = Modifier
                             .width(168.dp)
                             .height(28.dp)
-                            .align(alignment = CenterHorizontally),
+                            .align(alignment = Alignment.CenterHorizontally),
                         onClick = { /*TODO*/ }
                     ) {
                         Text(
@@ -307,12 +244,12 @@ fun AccountOverview(
 
 @Composable
 fun OrderSection(
-    listOrder: List <Order>
+    listOrder: List<Order>?
 ) {
     Column(
         modifier = Modifier,
 
-    ) {
+        ) {
         Text(
             text = "Pesanan Saya",
             fontSize = 12.sp,
@@ -330,43 +267,45 @@ fun OrderSection(
                 .clip(RoundedCornerShape(10.dp)),
             contentAlignment = Alignment.Center,
         ) {
-            if (listOrder.isNotEmpty()) {
-                Column(
-                    modifier = Modifier
-                        .wrapContentHeight()
-                        .padding(10.dp)
-                ) {
-                    (1 .. listOrder.size).forEach {
-                        OrderItem(order = listOrder[it-1], product = listOrder[it-1].product[0])
-                    }
-                }
-            } else {
-                Column(
-                    modifier = Modifier,
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-
-                ) {
-                    Text(
-                        text = "Tidak Memiliki Pesanan Aktif",
-                        fontSize = 12.sp,
-                        color = Color.Black,
-                        fontFamily = FontFamily(Font(R.font.montserrat_medium))
-                    )
-                    Button(
-                        shape = RoundedCornerShape(5.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = DarkBlue),
+            if (listOrder != null) {
+                if (listOrder.isNotEmpty()) {
+                    Column(
                         modifier = Modifier
-                            .width(110.dp)
-                            .height(32.dp)
-                            .align(alignment = CenterHorizontally),
-                        onClick = { /*TODO*/ }
+                            .wrapContentHeight()
+                            .padding(10.dp)
+                    ) {
+                        (1 .. listOrder.size).forEach {
+                            OrderItem(order = listOrder[it-1], product = listOrder[it-1].product[0])
+                        }
+                    }
+                } else {
+                    Column(
+                        modifier = Modifier,
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+
                     ) {
                         Text(
-                            text = "Mulai Belanja",
-                            fontSize = 9.sp,
-                            color = Color.White,
-                            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                            text = "Tidak Memiliki Pesanan Aktif",
+                            fontSize = 12.sp,
+                            color = Color.Black,
+                            fontFamily = FontFamily(Font(R.font.montserrat_medium))
                         )
+                        Button(
+                            shape = RoundedCornerShape(5.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = DarkBlue),
+                            modifier = Modifier
+                                .width(110.dp)
+                                .height(32.dp)
+                                .align(alignment = Alignment.CenterHorizontally),
+                            onClick = { /*TODO*/ }
+                        ) {
+                            Text(
+                                text = "Mulai Belanja",
+                                fontSize = 9.sp,
+                                color = Color.White,
+                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                            )
+                        }
                     }
                 }
             }
@@ -497,110 +436,6 @@ fun OrderItem(
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun ProfileButton(
-    items: List<ProfileButtonItem>,
-    navController: NavController
-) {
-    var selected by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-        ) {
-            items.forEach { item->
-                ProfileButtonItem(item = item)
-            }
-            Divider(
-                color = BorderGray,
-                thickness = 0.8.dp,
-            )
-        }
-
-}
-
-@Composable
-fun ProfileButtonItem(
-    item: ProfileButtonItem
-) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .clickable { /*TODO*/ }
-        ) {
-            Divider(
-                color = BorderGray,
-                thickness = 0.8.dp,
-            )
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp, vertical = 10.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = item.icon),
-                    contentDescription = "Item Icon",
-                    modifier = Modifier
-                        .size(18.dp)
-
-                )
-                Spacer(modifier = Modifier.width(20.dp))
-                Text(
-                    text = item.name,
-                    fontSize = 12.sp,
-                    color = Color.Black,
-                    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
-                    modifier = Modifier
-                        .padding(5.dp)
-                )
-            }
-        }
-}
-
-@Composable
-fun BantuanSection(
-    bantuanItem : List<ProfileBantuanItem>
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-    ) {
-        Text(
-            text = "Bantuan",
-            fontSize = 12.sp,
-            color = Color.Black,
-            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-            modifier = Modifier
-                .padding(15.dp)
-        )
-        Divider(
-            color = BorderGray,
-            thickness = 0.8.dp,
-        )
-        bantuanItem.forEach { item->
-            Text(
-                text = item.name,
-                fontSize = 10.sp,
-                color = Color.Black,
-                fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(36.dp)
-                    .padding(horizontal = 20.dp, vertical = 10.dp)
-                    .clickable { /*TODO*/ }
-            )
-            Divider(
-                color = BorderGray,
-                thickness = 0.8.dp,
-            )
         }
     }
 }
